@@ -1,19 +1,82 @@
-= image_downloader
+= Image Downloader
 
-Description goes here.
+Quite often there is a need to collect pictures from one or another page on the Internet. This plugin solves this particular task.
 
-== Contributing to image_downloader
+== Installation
+
+sudo gem install image_downloader
+
+== Requirements
+
+* ruby 1.8 or 1.9
+* gem nokogiri
+
+== Description
+
+Image Downloader is a rather simple library which does the following:
+* get web page (with Net::HTTP)
+* parse html page (use regexp or nokogiri)
+* download images (in one or multi-threads)
+
+== Example usage
+After installation, you can use the following code as an example:
  
-* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
-* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
-* Fork the project
-* Start a feature/bugfix branch
-* Commit and push until you are happy with your contribution
-* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
-* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+  require 'rubygems'
+  require 'image_downloader'
+  
+  page_url = 'www.test.com'
+  target_path = 'img_dir/'
+  downloader = ImageDownloader::Process.new(page_url,target_path)
+
+  #####
+  # download all images on page in any place (by regexp, all that look like url with image)
+  downloader.parse(:any_looks_like_image => true)
+
+  #####
+  # download images from all elements where usually images placed (<img...>, <a...>, ...)
+  downloader.parse()
+
+  #####
+  # download image from exect places in page
+  downloader.parse(:collect => {:link_icon => true})
+
+  downloader.download()
+
+For parse method available following options:
+:any_looks_like_image => true
+find all url which contain image extansion
+
+:collect => {:all => true, :(img_src|a_href|style_url|link_icon) => true}
+find images in:
+* img_src - <img src="url">
+* a_href - <a href="url">
+* style_url - <element style="(background|background-image): url('url')">
+* link_icon - <link rel="shortcut icon" href="url">
+
+:ignore_without => {:(extension|image_extension) => true}
+ignore URLs with images according to given parameters
+
+== Executables
+You can simply use the executed shell commands:
+
+For any looks like image download
+  download_any_images url dir/
+
+For download favicon only
+  download_icon url dir/
+
+For download all, that is located in the places for pictures
+  download_images url dir/
 
 == Copyright
 
 Copyright (c) 2011 Malykh Oleg. See LICENSE.txt for
 further details.
 
+== License
+
+The MIT License
+
+== Authors
+
+Personal blog author: {Malykh Oleg}(http://malyh.com/) - blog in russian
