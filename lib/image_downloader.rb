@@ -36,7 +36,7 @@ module ImageDownloader
     # :any_looks_like_image => true
     # :ignore_without => {:(extension|image_extension) => true}
     # Nokogiri gem is required:
-    # :collect => {:all => true, :(img_src|a_href|style_url|link_icon) => true},
+    # :collect => {:all => true, :(img_src|a_href|style_url|link_icon) => true}
     def parse(h={:collect => {}, :ignore_without => {}})
       self.rebuild_collect_hash(h)
 
