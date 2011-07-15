@@ -44,17 +44,17 @@ After installation, you can use the following code as an example:
 
 For parse method available following options:
 :any_looks_like_image => true
-find all url which contain image extansion
+(find all url which contain image extansion)
 
 :collect => {:all => true, :(img_src|a_href|style_url|link_icon) => true}
-find images in:
+(find images in):
 * img_src - <img src="url">
 * a_href - <a href="url">
 * style_url - <element style="(background|background-image): url('url')">
 * link_icon - <link rel="shortcut icon" href="url">
 
 :ignore_without => {:(extension|image_extension) => true}
-ignore URLs with images according to given parameters
+(ignore URLs with images according to given parameters)
 
 == Executables
 You can simply use the executed shell commands:
@@ -79,4 +79,4 @@ The MIT License
 
 == Authors
 
-Personal blog author: {Malykh Oleg}(http://malyh.com/) - blog in russian
+Personal blog author: {Malykh Oleg}[http://malyh.com/] - blog in russian
