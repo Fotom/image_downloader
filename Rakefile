@@ -17,10 +17,14 @@ Jeweler::Tasks.new do |gem|
   gem.name = "image_downloader"
   gem.homepage = "http://github.com/Fotom/image_downloader"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Parsing web page, finding images in specified locations and downloading them simultaneously or sequentially}
+  gem.description = %Q{Detailed description for image-downloader}
   gem.email = "malykholeg@gmail.com"
   gem.authors = ["Malykh Oleg"]
+  #  load lib files
+  gem.files = Dir.glob('lib/**/*.rb')
+  # executable like shell script in bin/ dir
+  gem.executables = ['download_any_images', 'download_images', 'download_icon']
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
