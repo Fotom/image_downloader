@@ -40,21 +40,46 @@ After installation, you can use the following code as an example:
   # download image from exect places in page
   downloader.parse(:collect => {:link_icon => true})
 
+  #####
+  # download images by regexp
+  downloader.parse(:regexp => /[^'"]+\.jpg/i)
+
   downloader.download()
 
-For parse method available following options:
-:any_looks_like_image => true
-(find all url which contain image extansion)
+For "parse" method available following options
 
-:collect => {:all => true, :(img_src|a_href|style_url|link_icon) => true}
-(find images in):
-* img_src - <img src="url">
-* a_href - <a href="url">
-* style_url - <element style="(background|background-image): url('url')">
-* link_icon - <link rel="shortcut icon" href="url">
+  # find all url which contain image extansion
+  :any_looks_like_image => true
 
-:ignore_without => {:(extension|image_extension) => true}
-(ignore URLs with images according to given parameters)
+  # find images in specified location
+  :collect => {
+    :all => true, # all image places
+    :(img_src|a_href|style_url|link_icon) => true # specified location
+  }
+
+  # find by regexp
+  :regexp => /['"]([^'"]+\.jpg)[^'"]*['"]/i)
+  :regexp => /[^'"]+\.jpg/i # the same, but shorter
+  :regexp => /[^'"]+\.css/  # other files can also be downloaded
+
+  # ignore URLs with images according to given parameters
+  :ignore_without => {:(extension|image_extension) => true}
+
+  # setting the favorite User-Agent (vary important for exclude 403, 404... responses from server)
+  :user_agent => "ruby" # Mozilla/5.0 by default
+
+Detailed location description
+
+* img_src   - tag: img,  attribute: src="url"
+* a_href    - tag: a,    attribute: href="url"
+* style_url - tag: any,  attribute: style="(background|background-image): url('url')"
+* link_icon - tag: link, attribute: rel="shortcut icon" href="url"
+
+For "download" method you can use following directives
+
+  :parallel => true # for multi thread downloading (this is default if no options)
+  :consequentially => true, # for sequential downloading into a single stream
+  :user_agent => "ruby" # Mozilla/5.0 by default
 
 == Executables
 You can simply use the executed shell commands:
@@ -67,6 +92,18 @@ For download favicon only
 
 For download all, that is located in the places for pictures
   download_images url dir/
+
+For download by regexp
+  download_by_regexp url dir/ "[^'\"]+\\.js"
+
+== Debugging
+
+"-d", "--debug"
+
+To monitor the process of downloading, use the -d flag in the parameters.
+Perhaps there is an error URI::InvalidURIError in some cases.
+
+  download_images url dir/ -d
 
 == Copyright
 
