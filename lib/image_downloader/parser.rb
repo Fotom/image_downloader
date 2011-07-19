@@ -14,22 +14,23 @@ end
 
 module ImageDownloader
   class Parser
-    attr_accessor :url, :argument_url, :content, :images, :images_hash
+    attr_accessor :url, :argument_url, :content, :images, :images_hash, :user_agent
 
     A_HREF_IMAGE_PREFIX = '_a_href_'
     STYLE_URL_IMAGE_PREFIX = '_style_url_'
     LINK_ICON_IMAGE_PREFIX = '_link_icon_'
     COLLECT_METHODS_PREFIX = 'collect_from_'
 
-    def initialize(url)
+    def initialize(url, user_agent)
       @argument_url = url
+      @user_agent = user_agent
       @url = URI.parse(url)
       @images = []
       @images_hash = {}
     end
 
     def get_content_raw
-      @content = open(self.argument_url).read
+      @content = open(self.argument_url, 'User-Agent' => self.user_agent).read
       @content.gsub!(/[\n\r\t]+/,' ')
     end
 
@@ -40,8 +41,12 @@ module ImageDownloader
       }
     end
 
+    def get_images_regexp(path,regexp)
+      self.content.scan(regexp) {|src| self.push_to_images(path,src.to_s)}
+    end
+
     def get_content
-      @content = Nokogiri::HTML(open(self.argument_url))
+      @content = Nokogiri::HTML(open(self.argument_url, 'User-Agent' => self.user_agent))
     end
 
     def get_images(path,h={})

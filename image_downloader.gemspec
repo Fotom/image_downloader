@@ -5,14 +5,14 @@
 
 Gem::Specification.new do |s|
   s.name = %q{image_downloader}
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Malykh Oleg"]
-  s.date = %q{2011-07-15}
+  s.date = %q{2011-07-19}
   s.description = %q{A simple lib for downloading pictures from web pages. It can get and parse page with different options and receive images from specified locations. It is possible to download images simultaneously in multiple threads or sequentially.}
   s.email = %q{malykholeg@gmail.com}
-  s.executables = ["download_any_images", "download_images", "download_icon"]
+  s.executables = ["download_any_images", "download_images", "download_icon", "download_by_regexp"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
@@ -28,11 +28,10 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/Fotom/image_downloader}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.7}
+  s.rubygems_version = %q{1.6.2}
   s.summary = %q{Lib for parsing web pages to find images in specified locations and downloading them simultaneously or sequentially}
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then

@@ -26,6 +26,8 @@ module ImageDownloader
   class Process
     attr_accessor :argument, :images
 
+    DEFAULT_USER_AGENT = 'Mozilla/5.0'
+
     def initialize(url, path)
       @argument = Arguments.new(url, path)
       @argument.check
@@ -34,16 +36,21 @@ module ImageDownloader
     end
 
     # :any_looks_like_image => true
+    # :regexp => /[^'"]+\.jpg/i
     # :ignore_without => {:(extension|image_extension) => true}
     # Nokogiri gem is required:
     # :collect => {:all => true, :(img_src|a_href|style_url|link_icon) => true}
+    # :user_agent => 'Mozilla/5.0'
     def parse(h={:collect => {}, :ignore_without => {}})
       self.rebuild_collect_hash(h)
 
-      parser = Parser.new(self.argument.url)
+      parser = Parser.new(self.argument.url, h[:user_agent] || DEFAULT_USER_AGENT)
       if h[:any_looks_like_image]
         parser.get_content_raw
         parser.get_images_raw(self.argument.path, h[:collect])
+      elsif h[:regexp]
+        parser.get_content_raw
+        parser.get_images_regexp(self.argument.path, h[:regexp])
       else
         parser.get_content
         parser.get_images(self.argument.path, h[:collect])
@@ -55,15 +62,24 @@ module ImageDownloader
     end
 
     # :(parallel|consequentially)
+    # :(parallel|consequentially) => true
+    # :user_agent => 'Mozilla/5.0'
     def download(*args)
-      if !args.first || args.first == :parallel
-        Download.parallel(self.images)
-      elsif args.first == :consequentially
-        Download.consequentially(self.images)
+      user_agent = args_hash_and_contain(args, :user_agent) || DEFAULT_USER_AGENT
+      if !args.first || args.first == :parallel || args_hash_and_contain(args, :parallel)
+        Download.parallel(self.images, user_agent)
+      elsif args.first == :consequentially || args_hash_and_contain(args, :consequentially)
+        Download.consequentially(self.images, user_agent)
+      else
+        p "Not correct argument for download method"
       end
     end
 
     protected
+
+    def args_hash_and_contain(args, sym)
+      ((args.first.class.to_s == "Hash") && !args.first.empty? && (args.first[sym]))
+    end
 
     def rebuild_collect_hash(h={})
       if !h[:collect] || h[:collect].empty? || h[:collect][:all]

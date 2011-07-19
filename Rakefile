@@ -24,7 +24,7 @@ Jeweler::Tasks.new do |gem|
   #  load lib files
   gem.files = Dir.glob('lib/**/*.rb')
   # executable like shell script in bin/ dir
-  gem.executables = ['download_any_images', 'download_images', 'download_icon']
+  gem.executables = ['download_any_images', 'download_images', 'download_icon', 'download_by_regexp']
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new

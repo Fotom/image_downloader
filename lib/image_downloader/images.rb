@@ -22,7 +22,7 @@ module ImageDownloader
       @absolute_src = ((@src =~ /http/) ? @src : ('http://' + page_host + '/' +  @src))
     end
 
-    def download
+    def download(user_agent)
       url = URI.parse(self.absolute_src)
       request = Net::HTTP::Get.new(url.path)
       Net::HTTP.start(url.host) {|http|
@@ -32,15 +32,17 @@ module ImageDownloader
         # - mechanize (main web client), slow
         # - wget, quick, but cannot support some ability (403, 404 responses)
         # - sockets, independent request, quick, but low-level (many lines of code)
-        self.download_by_segment(http,request)
-        # self.download_simple(http,request)
+        self.download_by_segment(http,request,user_agent)
+        # self.download_simple(http,request,user_agent)
       }
+    rescue URI::InvalidURIError
+      p "Error: bad URI: #{self.absolute_src}"  if $debug_option
     end
 
-    def download_by_segment(http,request)
+    def download_by_segment(http,request,user_agent)
       file = open(self.file_path_name, "wb")
       begin
-        http.request_get(request.path, "User-Agent"=> "Mozilla/5.0") do |response|
+        http.request_get(request.path, "User-Agent"=> user_agent) do |response|
           response.read_body do |segment|
             file.write(segment)
           end
@@ -50,8 +52,8 @@ module ImageDownloader
       end
     end
 
-    def download_simple(http,request)
-      response = http.get(request.path, "User-Agent"=> "Mozilla/5.0")
+    def download_simple(http,request,user_agent)
+      response = http.get(request.path, "User-Agent"=> user_agent)
       open(self.file_path_name, "wb") { |file|
         file.write(response.body)
       }
