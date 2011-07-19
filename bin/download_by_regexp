@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'image_downloader'
+
+downloader = ImageDownloader::Process.new(ARGV[0],ARGV[1])
+
+downloader.parse(:regexp => Regexp.new(ARGV[2], true))
+
+downloader.download()
