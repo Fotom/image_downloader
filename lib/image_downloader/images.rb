@@ -19,7 +19,7 @@ module ImageDownloader
 
       @file_name = h[:file_name_prefix] + file_name_suffix
       @file_path_name = h[:catalog_path] + '/' + @file_name
-      @absolute_src = ((@src =~ /http/) ? @src : ('http://' + page_host + '/' +  @src))
+      @absolute_src = ((@src =~ /http/) ? @src : ('http://' + page_host + '/' +  @src.sub(/^\/+/,'')))
     end
 
     def download(user_agent)
