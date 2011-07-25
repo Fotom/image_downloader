@@ -30,15 +30,25 @@ module ImageDownloader
     end
 
     def get_content_raw
-      @content = open(self.argument_url, 'User-Agent' => self.user_agent).read
+      @content = self.open_url.read
       @content.gsub!(/[\n\r\t]+/,' ')
     end
 
     def get_images_raw(path,h={})
-      self.content.scan(/['"]+[^'"]+\.(?:#{Images::IMAGE_EXTENSIONS.join('|')})['"]+/).map{|src|
-        src.gsub!(/['"]/,'')
-        self.push_to_images(path,src)
+      self.content.scan(/['"]+([^'"]+\.(?:#{Images::IMAGE_EXTENSIONS.join('|')}))[^'"]*['"]+/i) {|src|
+        self.push_to_images(path,Parser.clear(src[0]))
       }
+      self.content.scan(/(?:href|src)=([^\s'">]+\.(?:#{Images::IMAGE_EXTENSIONS.join('|')}))[^\s'">]*[>\s]+/i) {|src|
+        self.push_to_images(path,Parser.clear(src[0]))
+      }
+    end
+
+    def self.clear(str)
+      if str =~ /url/i
+        str.gsub!(/^.*?url\(/,'')
+        str.gsub!(/\)/,'')
+      end
+      str
     end
 
     def get_images_regexp(path,regexp)
@@ -46,7 +56,7 @@ module ImageDownloader
     end
 
     def get_content
-      @content = Nokogiri::HTML(open(self.argument_url, 'User-Agent' => self.user_agent))
+      @content = Nokogiri::HTML(self.open_url)
     end
 
     def get_images(path,h={})
@@ -110,6 +120,10 @@ module ImageDownloader
 
     class << self
       alias all_image_places all_collect_from_methods
+    end
+
+    def open_url
+      open(self.argument_url, 'User-Agent' => self.user_agent)
     end
 
   end

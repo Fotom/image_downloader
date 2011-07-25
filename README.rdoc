@@ -32,15 +32,15 @@ After installation, you can use the following code as an example:
   # download all images on page in any place (by regexp, all that look like url with image)
   downloader.parse(:any_looks_like_image => true)
 
-  #####
+  ##### or
   # download images from all elements where usually images placed (<img...>, <a...>, ...)
   downloader.parse()
 
-  #####
+  ##### or
   # download image from exect places in page
   downloader.parse(:collect => {:link_icon => true})
 
-  #####
+  ##### or
   # download images by regexp
   downloader.parse(:regexp => /[^'"]+\.jpg/i)
 
@@ -58,7 +58,7 @@ For "parse" method available following options
   }
 
   # find by regexp
-  :regexp => /['"]([^'"]+\.jpg)[^'"]*['"]/i)
+  :regexp => /['"]([^'"]+\.jpg)[^'"]*['"]/i) # for ruby 1.8 (in 1.9 not allowed () for scan method)
   :regexp => /[^'"]+\.jpg/i # the same, but shorter
   :regexp => /[^'"]+\.css/  # other files can also be downloaded
 

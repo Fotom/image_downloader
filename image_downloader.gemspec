@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{image_downloader}
-  s.version = "0.2.2"
+  s.version = "0.2.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Malykh Oleg"]
-  s.date = %q{2011-07-21}
+  s.date = %q{2011-07-25}
   s.description = %q{A simple lib for downloading pictures from web pages. It can get and parse page with different options and receive images from specified locations. It is possible to download images simultaneously in multiple threads or sequentially.}
   s.email = %q{malykholeg@gmail.com}
   s.executables = ["download_any_images", "download_images", "download_icon", "download_by_regexp"]
