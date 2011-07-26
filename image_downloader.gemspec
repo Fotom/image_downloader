@@ -5,12 +5,14 @@
 
 Gem::Specification.new do |s|
   s.name = %q{image_downloader}
-  s.version = "0.2.3"
+  s.version = "0.2.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Malykh Oleg"]
-  s.date = %q{2011-07-25}
-  s.description = %q{A simple lib for downloading pictures from web pages. It can get and parse page with different options and receive images from specified locations. It is possible to download images simultaneously in multiple threads or sequentially.}
+  s.date = %q{2011-07-26}
+  s.description = %q{A simple lib for downloading pictures from web pages. It can get and parse page with different options and receive images from specified locations. It is possible to download images simultaneously in multiple threads or sequentially.
+
+  In fact, it's picture downloader or picture grabber from web pages, which allows you to download photos (.jpg, .jpeg, .png, .gif, .ico, .svg, .bmp) and not only them.}
   s.email = %q{malykholeg@gmail.com}
   s.executables = ["download_any_images", "download_images", "download_icon", "download_by_regexp"]
   s.extra_rdoc_files = [
@@ -29,7 +31,7 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
-  s.summary = %q{Lib for parsing web pages to find images in specified locations and downloading them simultaneously or sequentially}
+  s.summary = %q{Lib for parsing web pages to find images in specified locations and downloading them simultaneously or sequentially. Picture downloader and grabber for images, photos, pictures (.jpg, .jpeg, .png, .gif, .ico, .svg, .bmp)...}
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION

@@ -17,8 +17,10 @@ Jeweler::Tasks.new do |gem|
   gem.name = "image_downloader"
   gem.homepage = "http://github.com/Fotom/image_downloader"
   gem.license = "MIT"
-  gem.summary = %Q{Lib for parsing web pages to find images in specified locations and downloading them simultaneously or sequentially}
-  gem.description = %Q{A simple lib for downloading pictures from web pages. It can get and parse page with different options and receive images from specified locations. It is possible to download images simultaneously in multiple threads or sequentially.}
+  gem.summary = %Q{Lib for parsing web pages to find images in specified locations and downloading them simultaneously or sequentially. Picture downloader and grabber for images, photos, pictures (.jpg, .jpeg, .png, .gif, .ico, .svg, .bmp)...}
+  gem.description = %Q{A simple lib for downloading pictures from web pages. It can get and parse page with different options and receive images from specified locations. It is possible to download images simultaneously in multiple threads or sequentially.
+
+  In fact, it's picture downloader or picture grabber from web pages, which allows you to download photos (.jpg, .jpeg, .png, .gif, .ico, .svg, .bmp) and not only them.}
   gem.email = "malykholeg@gmail.com"
   gem.authors = ["Malykh Oleg"]
   #  load lib files
